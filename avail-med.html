@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title> Index</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <!-- <script src="js/index.js"></script> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+   
+
+    <script src="js/index.js"></script>
+    <script>
+      function comboBoxChanged(city) {
+
+           var i = city.selectedIndex;
+
+           if(city[i].value=="Custom")
+           {
+            var customValue = prompt("Enter a custom value:");
+            city[i].value=customValue;
+            city[i].text=customValue;
+           } 
+        }
+
+        function doprev(refFile,prevImg)
+      {
+        const [file] = refFile.files
+          if (file) {
+            prevImg.src = URL.createObjectURL(file)
+          }
+      }
+      $(document).ready(function(){
+      
+        function setActiveUser()
+            {
+                var au=localStorage.getItem("activekuch");
+               // alert(au);
+               $("#formemail").val(au).prop("readonly",true);
+            }
+            setActiveUser();
+      });
+       
+      
+      </script>
+
+
+
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-lg bg-primary">
+        <div class="container-fluid" style="font-weight:bolder;">
+            <a class="navbar-brand text-white" href="#">Help RX</a>
+            <div class="collapse navbar-collapse" id="navbarSupportContent" style="margin-left:550px;">
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <form method="post"  enctype="multipart/form-data">
+    <div class="modal-body">
+      <div class="col-md-4 offset-md-1">
+          <label for="inputEmail" >E-mail</label>
+        <input type="text" class="form-control" id="formemail"name="txtEmail" placeholder="abc@xyz.com" value="" aria-label="First name">
+      </div>
+      
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-4 offset-md-1">
+          <label for="inputName" class="form-label">Medicine  Name</label>
+        <input type="text" class="form-control" name = "txtName"id="formname" value="dolo" placeholder="Name" aria-label="First name">
+      </div>
+      <div class="col-md-4 offset-md" >
+          <label for="inputContact" class="form-label">Expiry Date</label>
+          <input type="date" class="form-control"id="formdat" name="txtdat">
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-4 offset-md-1">
+        <label for="inputCity" class="form-label">Packing</label>
+        <select class="form-select" name ="txtpacking" id="formpacking" onchange="comboBoxChanged(this);" aria-label="Default select example">
+          <option selected> select </option>
+          <option value="bottles">bottles</option>
+          <option value="strips">strips</option>
+          <option value="Injection">Injection</option>
+          <option value="capsule">capsule</option>
+        </select>
+        </div>
+        <br>
+        <br>
+          
+      <div class="col-md-3 offset-md-1" >
+        <label for="inputName" class="form-label">Quantity</label>
+        <input type="text" class="form-control"id="formqty" name="txtqty" value="40" placeholder="quantity" aria-label="First name">
+          
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-3 ">
+        <center>
+           <button type="submit" formaction="/avail-med"  id="btnsaveavail"class="btn btn-primary">Avail Meds</button>
+        </center>
+      </div>
+        </div>
+        </form>
+
+
+      </body>
+      </html>

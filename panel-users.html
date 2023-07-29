@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <script src="script/angular.min.js"></script>
+    <script>
+        var module=angular.module("myModule",[]);
+        module.controller("myController",function($scope,$http){
+            $scope.jsonArray=[];
+//===========================================================
+$scope.doDelete=function(email)
+                {
+                    if(confirm("Are you Sure you want to delete this user?")==false)
+                        return;
+                        var url="/do-angular-delete?email="+email;
+                        $http.get(url).then(done,fail);
+                        function done(resp)
+                        {
+                           alert(resp.data);
+                           $scope.fetchRecords();
+
+                        }
+                     function fail(resp)
+                        {
+                                alert(resp.data);
+                        }   
+
+                };
+
+//============================================================
+$scope.doBlock = function(email) {
+    if (confirm("Are you sure you want to block this user?")==false)
+        
+     alert(email);
+    var url = "/do-angular-block?email=" + email;
+    $http.get(url).then(done, fail);
+
+    function done(resp) {
+        alert(resp.data);
+      
+    }
+
+    function fail(resp) {
+        alert(resp.data);
+    }
+};
+//=====================================================================
+$scope.doResume = function(email) {
+    if (confirm("Are you sure you want to resume this user?")==false)
+        return;
+
+    var url = "/do-angular-resume?email=" + email;
+    $http.get(url).then(done, fail);
+
+    function done(resp) {
+        alert(resp.data);
+      
+    }
+
+    function fail(resp) {
+        alert("fail");
+    }
+};
+
+ //========================================================================================================               
+            $scope.fetchRecords=function()
+                {
+                    var url="/get-angular-all-records";
+                    $http.get(url).then(done,fail);
+                    function done(resp)
+                        {
+                          
+                            $scope.jsonArray=resp.data;
+
+                        }
+                     function fail(resp)
+                        {
+                           
+                                alert(resp.data);
+                        }   
+                }
+            })
+            </script>
+            </head>
+            <body class="background">
+                <nav class="navbar navbar-expand-lg bg-primary">
+                    <div class="container-fluid" style="font-weight:bolder;">
+                        <a class="navbar-brand text-white" href="#">Help RX</a>
+                        <div class="collapse navbar-collapse" id="navbarSupportContent" style="margin-left:550px;">
+                        </div>
+                    </div>
+                </nav>
+            <body ng-app="myModule" ng-controller="myController">
+                <center>
+                    <p>
+                        <h1> Users</h1>
+                    </p>
+                    <hr>
+                    <input type="button" ng-click="fetchRecords()" value="fatchRecords">
+                    <table width="800" border="1">
+                        <tr>
+                            <th>Sr.No</th> <th>Email id</th>  <th>Password</th>  <th>Type</th> <th>dos</th> <th>Status</th> <th>Operations</th>
+                            <tr ng-repeat="obj in jsonArray">
+                                <td>{{$index+1}}</td>
+                                <td>{{obj.email}}</td>
+                                <td>{{obj.pwd}}</td>
+                                <td>{{obj.type}}</td>
+                                <td>{{obj.dos}}</td>
+                                <td>{{obj.status}}</td>
+                                <td align="center">
+                                    <input type="button" value="Delete" ng-click="doDelete(obj.email);">
+                                   <input type="button" value="Block" ng-click="doBlock(obj.email);">
+                                   <input type="button" value="Resume" ng-click="doResume(obj.email);">
+                               </td>
+
+
+                            </tr>
+                        </tr>
+                    </table>
+                </center>
+            </body>
+            </html>

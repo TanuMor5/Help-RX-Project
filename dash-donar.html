@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+
+    <!-- <script src="js/index.js"></script> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    
+
+    <script src="js/index.js"></script>
+
+    <style>
+        .container {
+            margin-top: 100px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+         
+                $("#btnupdateModal").click(function () {
+                    //alert();
+                var email = $("#Formemail").val();
+                var oldpwd = $("#Formpass").val();
+                var newpwd = $("#Formpass1").val();
+                var confirmpwd = $("#Formpass2").val();
+                if (oldpwd != newpwd) 
+                {
+                    if(newpwd == confirmpwd )
+                    {
+                    var obj = {
+                        type: "get",
+                        url: "/db-update",
+                        data: {
+                            email: email,
+                            oldpwd: oldpwd,
+                            newpwd: newpwd,
+                        
+                        }
+                    }
+
+                    $.ajax(obj).done(function (resp) {
+                        $("#resupdate").html(resp);
+                       
+                    }).fail(function (err) {
+                        $("#resupdate").html(err);
+
+                    })
+                }
+                else {
+                    $("#resupdate").html("PASSWORDS ARE NOT MATCHING ");
+                }
+                }
+                else {
+                    $("#resupdate").html("enter diff passwords");
+                }
+            });
+            function setActiveUser()
+            {
+                var au=localStorage.getItem("activekuch");
+              
+               $("#Formemail").val(au).prop("readonly",true);
+            }
+            setActiveUser();
+        });
+       
+        
+
+
+    </script>
+
+</head>
+
+<body>
+  
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div class="col-md-3 offset-md-1 " style="color: deepskyblue;">
+            <h2><b>Help RX</b></h2>
+        </div>
+
+        <div class=" col-md-3 offset-md-1 d-grid gap-2 d-md-block">
+
+            <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#signupModal" style="margin-right:50px">
+                Logout
+            </button>
+        </div>
+        <br>
+    </nav>
+    <div class="container">
+        <div class="card" style="width: 18rem;">
+            <img src="pics/medicine-g4540e7900_640.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Profile</h5>
+
+                <a href="profile-donar.html" class="btn btn-primary">Profile</a>
+            </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <img src="pics/doctor-gb8dfa235a_640.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Avail Medicines</h5>
+
+                <a href="avail-med.html" class="btn btn-primary">Avail Medicines</a>
+            </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <img src="pics/face-g65b1e08f6_640.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Medicine Manager</h5>
+
+                <a href="med-manager.html" class="btn btn-primary">Manage Medicines</a>
+            </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <img src="pics/settings_2881031.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Settings</h5>
+
+                <a href="#" type="button" id="btnsetting" class="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#updateModal">Settings</a>
+            </div>
+        </div>
+
+    </div>
+
+    <form>
+
+        <div class="modal fade " id="updateModal" tabindex="-1" aria-labelledby="updatepage" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="Updatepage">Fill your details below</h1>
+                        <button type="button" data-bs-dismiss="modal" class="btn-close" 
+                            aria-label="close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="md-form mb-3">
+
+                            <label data-error="wrong" data-success="right" for="defaultForm-email"> Email
+                                address</label>
+                            <input type="email" id="Formemail" class="form-control validate"  required
+                                style="height: 50px;">
+                            <div id="errEmail" class="mt-2"></div>
+                        </div>
+
+                        <div class="md-form mb-3">
+
+                            <label data-error="wrong" data-success="right" for="defaultForm-pass">Old Password </label>
+                            <div>
+
+                                <input type="password" id="Formpass" class=" form-control validate" value="" required
+                                    style="height: 50px;">
+                            </div>
+
+                            <div id="errPass" class="mt-2"></div>
+                        </div>
+
+                        <div class="md-form mb-3">
+
+                            <label data-error="wrong" data-success="right" for="defaultForm-pass">new Password </label>
+                            <div>
+
+                                <input type="password" id="Formpass1" class=" form-control validate" value="" required
+                                    style="height: 50px;">
+                            </div>
+
+                            <div id="errPass1" class="mt-2"></div>
+                        </div>
+
+                        <div class="md-form mb-3">
+
+                            <label data-error="wrong" data-success="right" for="Form-pass">confirm Password </label>
+                            <div>
+
+                                <input type="password" id="Formpass2" class=" form-control validate" value="" required
+                                    style="height: 50px;">
+                            </div>
+                        </div>
+                        <div id="errPass2" class="mt-2"></div>
+                    </div>
+                    <div style="padding:10px 0px 10px">
+                        <center>
+                            
+                                <input class="btn btn-success" type="button" id="btnupdateModal" value="update">
+                            <br>
+                            <span id="resupdate">*</span>
+                        </center>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+
+
+
+
+
+</html>
